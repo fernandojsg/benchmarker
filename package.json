@@ -1,0 +1,29 @@
+{
+  "name": "tiny-benchmarks",
+  "version": "0.0.1",
+  "description": "Tiny benchmarks framework",
+  "main": "index.js",
+  "scripts": {
+    "example": "node -r esm --expose-gc examples/index.js",
+    "start": "npm run example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandojsg/tiny-benchmarks.git"
+  },
+  "keywords": [
+    "benchmarks"
+  ],
+  "author": "Fernando Serrano <fernandojsg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fernandojsg/tiny-benchmarks/issues"
+  },
+  "homepage": "https://github.com/fernandojsg/tiny-benchmarks#readme",
+  "dependencies": {
+    "incremental-stats-lite": "^0.1.1"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
+  }
+}
