@@ -1,2 +1,2 @@
-# tiny-benchmark
+# tiny-benchmarks
 Benchmarks
