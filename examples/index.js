@@ -7,16 +7,18 @@ let benchmarks = new Benchmarks({
 });
 
 benchmarks
-  .add(
-    "Test",
-    () => {
-      let arr = [];
-      for (let i = 0; i < 100000; i++) {
-        arr.push(Math.random());
-      }
-      arr.sort();
+  .add({
+    name: "Test",
+    prepare: (ctx) => {
+      ctx.arr = [];
     },
-    10
-  );
+    execute: (ctx) => {
+      for (let i = 0; i < 100000; i++) {
+        ctx.arr.push(Math.random());
+      }
+      ctx.arr.sort();
+    },
+    iterations: 10
+  });
 
 benchmarks.run();

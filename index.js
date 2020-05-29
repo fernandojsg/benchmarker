@@ -14,22 +14,33 @@ export class Benchmarks {
     this.options = Object.assign(DEFAULT_GLOBAL_OPTIONS, globalOptions);
     this.benchDefaultOptions = Object.assign(DEFAULT_OPTIONS, benchDefaultOptions);
   }
-  add(name, fn, iterations, options = {}) {
-    this.benchs.push({
-      name,
-      fn,
-      options: Object.assign(this.benchDefaultOptions, options),
-      iterations
-    });
+  add(bench) {
+    // options = {}
+    if (!bench.options) {
+      bench.options = this.benchDefaultOptions;
+    } else {
+      bench.options = Object.assign(this.benchDefaultOptions, bench.options);
+    }
+
+    this.benchs.push(bench);
     return this;
   }
 
   run() {
     this.benchs.forEach(bench => {
       let stats = new Stats();
+      let context = {};
+      if (bench.prepareGlobal) {
+        bench.prepareGlobal(context);
+      }
+
       for (let i = 0; i < bench.iterations; i++) {
+        if (bench.prepare) {
+          bench.prepare(context);
+        }
+
         let t0 = Date.now();
-        bench.fn();
+        bench.execute(context);
         let total = Date.now() - t0;
         stats.update(total);
 
@@ -46,6 +57,7 @@ export class Benchmarks {
           );
         }
       }
+
       if (this.options.verbose) {
         console.log(
           `${"=".repeat(60)}\n${bench.name} - ${bench.iterations} iterations`
