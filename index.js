@@ -1,8 +1,11 @@
 import Stats from "incremental-stats-lite";
 
 const DEFAULT_GLOBAL_OPTIONS = {
-  verbose: false
+  verbose: false,
+  summary: true
 };
+
+const log = console.log;
 
 const DEFAULT_OPTIONS = {
   gc: true
@@ -15,7 +18,6 @@ export class Benchmarks {
     this.benchDefaultOptions = Object.assign(DEFAULT_OPTIONS, benchDefaultOptions);
   }
   add(bench) {
-    // options = {}
     if (!bench.options) {
       bench.options = this.benchDefaultOptions;
     } else {
@@ -44,27 +46,34 @@ export class Benchmarks {
         let total = Date.now() - t0;
         stats.update(total);
 
-        if (bench.options.gc) {
-          global.gc();
-        }
-
         // @todo Logging options
         if (this.options.verbose) {
-          console.log(
+          log(
             `${bench.name} ${(i + 1).toString().padStart(2)}/${
               bench.iterations
             }: ${total}ms`
           );
+          //  heapUsed: ${process.memoryUsage().heapUsed}
+        }
+
+        if (bench.options.gc) {
+          global.gc();
         }
       }
 
-      if (this.options.verbose) {
-        console.log(
-          `${"=".repeat(60)}\n${bench.name} - ${bench.iterations} iterations`
+      if (this.options.summary || this.options.verbose) {
+        let title = `${bench.name} - ${bench.iterations} iterations`;
+        const len = title.length;
+        log(
+          `${"-".repeat(len)}\n${title}\n${"-".repeat(len)}`
         );
-        console.log("-".repeat(60));
-        console.log(stats.getAll());
-        console.log("=".repeat(60));
+        const values = stats.getAll();
+        Object.entries(values).forEach(([key, value]) => {
+          if (key !== "n") {
+            console.log(`- ${key}: ${value.toFixed(2)}`);
+          }
+        });
+        console.log('\n');
       }
     });
   }
