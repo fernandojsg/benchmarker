@@ -1,0 +1,104 @@
+{
+	"groups": [
+		{
+			"groupName": "nogroup",
+			"benchmarks": [
+				{
+					"name": "Add 1 tagComponent",
+					"stats": {
+						"n": 10,
+						"min": 34,
+						"max": 47,
+						"sum": 375,
+						"mean": 37.50000000000001,
+						"variance": 17.05000000000002,
+						"standard_deviation": 4.129164564412518
+					}
+				},
+				{
+					"name": "Add 2 tagComponent",
+					"stats": {
+						"n": 10,
+						"min": 74,
+						"max": 89,
+						"sum": 772,
+						"mean": 77.2,
+						"variance": 17.960000000000004,
+						"standard_deviation": 4.237924020083419
+					}
+				},
+				{
+					"name": "Add 3 tagComponent",
+					"stats": {
+						"n": 10,
+						"min": 112,
+						"max": 130,
+						"sum": 1170,
+						"mean": 117,
+						"variance": 31.399999999999967,
+						"standard_deviation": 5.603570290448757
+					}
+				},
+				{
+					"name": "Remove 1 tagComponent (100k entities with 1 component)",
+					"stats": {
+						"n": 10,
+						"min": 47,
+						"max": 70,
+						"sum": 540,
+						"mean": 54.00000000000001,
+						"variance": 67.80000000000003,
+						"standard_deviation": 8.234075540095562
+					}
+				},
+				{
+					"name": "Remove 1 tagComponent (100k entities with 3 component)",
+					"stats": {
+						"n": 10,
+						"min": 70,
+						"max": 75,
+						"sum": 721,
+						"mean": 72.1,
+						"variance": 1.6899999999999937,
+						"standard_deviation": 1.2999999999999976
+					}
+				}
+			],
+			"meanAll": 357.80000000000007,
+			"sumAll": 3578
+		},
+		{
+			"groupName": "objectpool",
+			"benchmarks": [
+				{
+					"name": "new ObjectPool(TagComponent, 100k)",
+					"stats": {
+						"n": 10,
+						"min": 6,
+						"max": 51,
+						"sum": 388,
+						"mean": 38.800000000000004,
+						"variance": 236.16,
+						"standard_deviation": 15.367498169838838
+					}
+				},
+				{
+					"name": "new ObjectPool(Component1, 100k)",
+					"stats": {
+						"n": 10,
+						"min": 44,
+						"max": 50,
+						"sum": 461,
+						"mean": 46.1,
+						"variance": 3.4899999999999993,
+						"standard_deviation": 1.8681541692269403
+					}
+				}
+			],
+			"meanAll": 84.9,
+			"sumAll": 849
+		}
+	],
+	"meanAll": 442.70000000000005,
+	"sumAll": 4427
+}

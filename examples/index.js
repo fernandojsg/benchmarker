@@ -1,4 +1,4 @@
-import { Benchmarks } from "../index.js";
+import { Benchmarks } from "../src/index.js";
 
 console.log("EXAMPLE");
 
