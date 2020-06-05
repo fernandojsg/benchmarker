@@ -5,8 +5,8 @@ function compareResults(resultsList) {
       value: "Global results",
       color: "white",
       align: "left",
-      width: 40
-    }
+      width: 40,
+    },
   ];
 
   let headerGroups = [
@@ -14,25 +14,24 @@ function compareResults(resultsList) {
       value: "Results per group",
       color: "white",
       align: "left",
-      width: 40
-    }
+      width: 40,
+    },
   ];
 
   let headerBenchmarks = [
     {
       value: "Results per benchmark",
       color: "white",
-      align: "left"
+      align: "left",
     },
     {
       value: "Group",
       color: "cyan",
-      align: "left"
-    }
+      align: "left",
+    },
   ];
 
-
-  let globalRows = ['GLOBAL'];
+  let globalRows = ["GLOBAL"];
   let groups = [];
   let benchmarksRows = [];
 
@@ -40,11 +39,11 @@ function compareResults(resultsList) {
     constructor() {
       this.min = {
         value: Infinity,
-        id: 0
+        id: 0,
       };
       this.max = {
         value: -Infinity,
-        id: 0
+        id: 0,
       };
     }
   }
@@ -68,51 +67,50 @@ function compareResults(resultsList) {
     computeMinMax(i, value, mmGlobal);
 
     // Header
-    headerGlobal.push( {
-      value: results.name.replace(/\.[^.]+$/, ''),
+    headerGlobal.push({
+      value: results.name.replace(/\.[^.]+$/, ""),
       formatter: function (value) {
         var str = value;
         if (mmGlobal.min.id === i) {
-          str = this.style(str, "green")
+          str = this.style(str, "green");
         } else if (mmGlobal.max.id === i) {
-          str = this.style(str, "red")
+          str = this.style(str, "red");
         }
         return str;
-      }
+      },
     });
 
-    headerGroups.push( {
-      value: results.name.replace(/\.[^.]+$/, ''),
+    headerGroups.push({
+      value: results.name.replace(/\.[^.]+$/, ""),
       formatter: function (value, col, row) {
         var str = value;
         let mm = mmGroups[row];
         if (mm.min.value === mm.max.value) {
-          str = this.style(str, "grey")
+          str = this.style(str, "grey");
         } else if (mm.min.value === value) {
-          str = this.style(str, "green")
+          str = this.style(str, "green");
         } else if (mm.max.value === value) {
-          str = this.style(str, "red")
+          str = this.style(str, "red");
         }
         return str;
-      }
+      },
     });
 
-    headerBenchmarks.push( {
-      value: results.name.replace(/\.[^.]+$/, ''),
+    headerBenchmarks.push({
+      value: results.name.replace(/\.[^.]+$/, ""),
       formatter: function (value, col, row) {
         var str = value;
         let mm = mmBenchmarks[row];
         if (mm.min.value === mm.max.value) {
-          str = this.style(str, "grey")
+          str = this.style(str, "grey");
         } else if (mm.min.value === value) {
-          str = this.style(str, "green")
+          str = this.style(str, "green");
         } else if (mm.max.value === value) {
-          str = this.style(str, "red")
+          str = this.style(str, "red");
         }
         return str;
-      }
+      },
     });
-
   });
 
   globalRows.push(mmGlobal.max.value - mmGlobal.min.value);
@@ -137,7 +135,7 @@ function compareResults(resultsList) {
       groups[j].push(group.sumAll);
       computeMinMax(i, group.sumAll, mmGroups[j]);
 
-      group.benchmarks.forEach((benchmark, k) => {
+      group.benchmarks.forEach((benchmark) => {
         if (i === 0) {
           mmBenchmarks.push(new MinMax());
           benchmarksRows.push([benchmark.name, group.groupName]);
@@ -161,35 +159,35 @@ function compareResults(resultsList) {
   });
 
   headerGlobal.push({
-    value: "diff"
+    value: "diff",
   });
   headerGlobal.push({
     value: "diff %",
     formatter: function (value) {
-      var str = (100 * value).toFixed(2) + '%';
+      var str = (100 * value).toFixed(2) + "%";
       if (value > 0.2) {
         str = this.style(str, "red");
       } else if (value > 0.05) {
         str = this.style(str, "yellow");
       }
       return str;
-    }
+    },
   });
 
   headerGroups.push({
-    value: "diff"
+    value: "diff",
   });
   headerGroups.push({
     value: "diff %",
     formatter: function (value) {
-      var str = (100 * value).toFixed(2) + '%';
+      var str = (100 * value).toFixed(2) + "%";
       if (value > 0.2) {
         str = this.style(str, "red");
       } else if (value > 0.05) {
         str = this.style(str, "yellow");
       }
       return str;
-    }
+    },
   });
 
   headerBenchmarks.push({
@@ -199,22 +197,22 @@ function compareResults(resultsList) {
         return this.style("0", "grey");
       }
       return value;
-    }
+    },
   });
   headerBenchmarks.push({
     value: "diff %",
     formatter: function (value) {
-      var str = (100 * value).toFixed(2) + '%';
+      var str = (100 * value).toFixed(2) + "%";
       if (value > 0.2) {
         str = this.style(str, "red");
       } else if (value > 0.05) {
         str = this.style(str, "yellow");
       } else if (value == 0) {
-        str = this.style('-', "grey");
+        str = this.style("-", "grey");
       }
 
       return str;
-    }
+    },
   });
 
   // Example with arrays as rowsGlobal
@@ -225,13 +223,12 @@ function compareResults(resultsList) {
     headerAlign: "center",
     align: "center",
     color: "white",
-    truncate: "..."
-  }
+    truncate: "...",
+  };
 
   console.log(Table(headerGlobal, [globalRows], null, options).render());
   console.log(Table(headerGroups, groups, null, options).render());
   console.log(Table(headerBenchmarks, benchmarksRows, null, options).render());
-
 }
 
 exports.compareResults = compareResults;

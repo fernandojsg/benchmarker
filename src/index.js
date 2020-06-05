@@ -3,25 +3,28 @@ import Stats from "incremental-stats-lite";
 const DEFAULT_GLOBAL_OPTIONS = {
   verbose: false,
   summary: true,
-  iterations: 10
+  iterations: 10,
 };
 
 const log = console.log;
 
 const DEFAULT_OPTIONS = {
-  gc: true
+  gc: true,
 };
 
 export class Benchmarks {
   constructor(globalOptions, benchDefaultOptions) {
     this.benchs = [];
     this.benchsByGroup = {
-      nogroup: []
+      nogroup: [],
     };
     this.currentGroup = this.benchsByGroup.nogroup;
 
     this.options = Object.assign(DEFAULT_GLOBAL_OPTIONS, globalOptions);
-    this.benchDefaultOptions = Object.assign(DEFAULT_OPTIONS, benchDefaultOptions);
+    this.benchDefaultOptions = Object.assign(
+      DEFAULT_OPTIONS,
+      benchDefaultOptions
+    );
   }
 
   add(bench) {
@@ -41,12 +44,12 @@ export class Benchmarks {
     return this;
   }
 
-  getReport(format = "json") {
+  getReport() {
     let groups = [];
     let json = {
       groups: groups,
       meanAll: 0,
-      sumAll: 0
+      sumAll: 0,
     };
 
     Object.entries(this.benchsByGroup).forEach(([groupName, benchmarks]) => {
@@ -58,16 +61,16 @@ export class Benchmarks {
         groupName: groupName,
         benchmarks: [],
         meanAll: 0,
-        sumAll: 0
+        sumAll: 0,
       };
 
       groups.push(group);
 
-      benchmarks.forEach(bench => {
+      benchmarks.forEach((bench) => {
         const stats = bench.stats.getAll();
         let current = {
           name: bench.name,
-          stats: {}
+          stats: {},
         };
         group.benchmarks.push(current);
         Object.entries(stats).forEach(([key, value]) => {
@@ -95,7 +98,7 @@ export class Benchmarks {
   }
 
   run() {
-    this.benchs.forEach(bench => {
+    this.benchs.forEach((bench) => {
       bench.stats = new Stats();
       let context = {};
       if (bench.prepareGlobal) {
@@ -127,19 +130,17 @@ export class Benchmarks {
         }
       }
 
-      if (this.options.summary || this.options.verbose) {
+      if (this.options.summary || this.options.verbose) {
         let title = `${bench.name} - ${bench.iterations} iterations`;
         const len = title.length;
-        log(
-          `${"-".repeat(len)}\n${title}\n${"-".repeat(len)}`
-        );
+        log(`${"-".repeat(len)}\n${title}\n${"-".repeat(len)}`);
         const values = bench.stats.getAll();
         Object.entries(values).forEach(([key, value]) => {
           if (key !== "n") {
             console.log(`- ${key}: ${value.toFixed(2)}`);
           }
         });
-        console.log('\n');
+        console.log("\n");
       }
     });
   }
