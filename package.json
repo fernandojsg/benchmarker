@@ -3,6 +3,9 @@
   "version": "0.0.3",
   "description": "Benchmarks framework",
   "main": "src/index.js",
+  "bin": {
+    "benchmarker": "src/client.js"
+  },
   "scripts": {
     "example": "node -r esm --expose-gc examples/index.js",
     "start": "npm run example"
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/fernandojsg/benchmarker#readme",
   "dependencies": {
+    "caporal": "^1.4.0",
     "chalk": "^4.0.0",
     "console-table-printer": "^1.4.30",
     "incremental-stats-lite": "^0.1.1",
